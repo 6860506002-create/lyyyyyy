@@ -1,3 +1,21 @@
+<?php
+$host = $_ENV['DB_HOST'] ?? 'localhost';
+$user = $_ENV['DB_USER'] ?? 'root';
+$pass = $_ENV['DB_PASSWORD'] ?? '';
+$dbname = $_ENV['DB_NAME'] ?? 'dokploy';
+
+$conn = @new mysqli($host, $user, $pass, $dbname);
+
+if (!$conn->connect_error) {
+    $sql = "CREATE TABLE IF NOT EXISTS bst_logs (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        action VARCHAR(50),
+        value INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    $conn->query($sql);
+}
+?>
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -356,4 +374,5 @@ function addCollection() {
 </script>
 
 </body>
+
 </html>
